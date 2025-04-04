@@ -1,0 +1,14 @@
+doh:
+  resolvers:
+    - https://1.1.1.1/dns-query
+    - https://8.8.8.8/resolve
+
+#minimalisir edit dibawah ini
+server:
+  udp_port: 53 
+  buffer_size: 512
+  enable_recursion: false # Aktifkan rekursi; not aplied now
+
+rate_limit:
+  max_requests: 10       # Jumlah request maksimal per IP
+  window_seconds: 60     # Dalam berapa detik jendela waktunya

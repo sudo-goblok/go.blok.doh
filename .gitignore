@@ -1,0 +1,53 @@
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+*.out
+*.o
+gbd
+go.block.doh
+go.blok.doh
+# Build artifacts
+/bin/
+/pkg/
+/vendor/
+/dist/
+/tmp/
+
+# Logs
+*.log
+*.test
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependency files
+# go.sum
+go.work
+go.work.sum
+
+# Configurations
+.env
+*.yaml
+*.json
+
+# Compiled objects
+*.a
+*.o
+
+# Debugging files
+*.test
+
+# Docker related files
+docker-compose.override.yml
+
+#dir db
+dns_logs/*
+dns_logs/
+
+!src/config/*.yaml
+!config.default.yaml

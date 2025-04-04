@@ -1,0 +1,39 @@
+doh:
+  # see this https://adguard-dns.io/kb/general/dns-providers/
+  resolvers:
+    # # standard filtering
+    # - id: "Cloudflare"
+    #   url: "https://1.1.1.1/dns-query"
+    #   weight: 5
+    # # Malware and adult content blocking
+    - id: "Cloudflare-Family"
+      url: "https://1.1.1.3/dns-query"
+      weight: 5      
+    # # standard filtering
+    # - id: "Google"
+    #   url: "https://8.8.8.8/resolve"
+    #   weight: 3
+    # # standard  filtering : These servers block ads, tracking, and phishing.
+    # - id: "DNS-Adguard"
+    #   url: "https://94.140.14.14/resolve"
+    #   weight: 2
+    # Family Protection : These servers provide the Default features + Blocking adult websites + Safe search.
+    - id: "DNS-Adguard-Family"
+      url: "https://94.140.15.16/resolve"
+      weight: 2
+    # # Non filtering
+    # - id: "DNS-Adguard-Unfiltered"
+    #   url: "https://94.140.14.140/resolve"
+    #   weight: 2
+
+
+
+#minimalisir edit dibawah ini
+server:
+  udp_port: 53 
+  buffer_size: 512
+  enable_recursion: false # Aktifkan rekursi; not aplied now
+
+rate_limit:
+  max_requests: 10       # Jumlah request maksimal per IP
+  window_seconds: 60     # Dalam berapa detik jendela waktunya
