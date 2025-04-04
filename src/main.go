@@ -12,32 +12,27 @@ import (
 	"golang.org/x/time/rate"
 )
 
-// Struktur konfigurasi resolver
 type Resolver struct {
 	ID     string `mapstructure:"id"`
 	URL    string `mapstructure:"url"`
 	Weight int    `mapstructure:"weight"`
 }
 
-// Struktur konfigurasi DOH
 type DOHConfig struct {
 	Resolvers []Resolver `mapstructure:"resolvers"`
 }
 
-// Struktur konfigurasi server
 type ServerConfig struct {
 	UDPPort        int  `mapstructure:"udp_port"`
 	BufferSize     int  `mapstructure:"buffer_size"`
 	EnableRecusion bool `mapstructure:"enable_recursion"`
 }
 
-// Struktur konfigurasi rate limit
 type RateLimitCfg struct {
 	MaxRequests   int `mapstructure:"max_requests"`
 	WindowSeconds int `mapstructure:"window_seconds"`
 }
 
-// Struktur utama konfigurasi
 type Config struct {
 	DOH struct {
 		Resolvers []doh.Resolver `mapstructure:"resolvers"`
@@ -46,7 +41,6 @@ type Config struct {
 	RateLimit RateLimitCfg `mapstructure:"rate_limit"`
 }
 
-// Fungsi untuk memuat konfigurasi dari file YAML
 func LoadConfig() (*Config, error) {
 	viper.AddConfigPath("config")
 	viper.SetConfigName("config")
@@ -65,7 +59,6 @@ func LoadConfig() (*Config, error) {
 }
 
 func main() {
-	// Tambahkan argumen UDP Port
 	udpPortArg := flag.Int("udp_port", 0, "Port UDP untuk server")
 	flag.Parse()
 
@@ -78,7 +71,6 @@ func main() {
 	}
 	log.Println("[INFO] Configuration loaded successfully.")
 
-	// Gunakan nilai dari argumen jika diberikan, jika tidak gunakan dari config
 	udpPort := cfg.Server.UDPPort
 	if *udpPortArg != 0 {
 		udpPort = *udpPortArg

@@ -26,9 +26,6 @@ doh:
     #   url: "https://94.140.14.140/resolve"
     #   weight: 2
 
-
-
-#minimalisir edit dibawah ini
 server:
   udp_port: 53 
   buffer_size: 512

@@ -11,7 +11,7 @@ import (
 
 // Struktur log DNS
 type DNSLog struct {
-	Timestamp   int64  `json:"timestamp"` // Unix timestamp dalam nanodetik
+	Timestamp   int64  `json:"timestamp"` // Unix timestamp nanodetik
 	ClientIP    string `json:"client_ip"`
 	Query       string `json:"query"`
 	QueryType   int    `json:"query_type"`

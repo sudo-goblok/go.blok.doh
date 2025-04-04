@@ -14,7 +14,6 @@ import (
 	"time"
 )
 
-// Struktur resolver dengan ID, URL, dan Weight
 type Resolver struct {
 	ID     string
 	URL    string
@@ -44,7 +43,7 @@ type DOHResponse struct {
 		TTL  int    `json:"TTL"`
 		Data string `json:"data"`
 	} `json:"Authority"`
-	Comment json.RawMessage `json:"Comment,omitempty"` // Pakai RawMessage untuk fleksibilitas
+	Comment json.RawMessage `json:"Comment,omitempty"` // RawMessage for flexibility
 }
 
 type DOHClient struct {
@@ -62,28 +61,23 @@ type ResolverInfo struct {
 func (d *DOHResponse) GetComment() []string {
 	var comments []string
 
-	// Cek apakah Comment kosong
 	if len(d.Comment) == 0 {
 		return comments
 	}
 
-	// Coba decode sebagai array string
 	if err := json.Unmarshal(d.Comment, &comments); err == nil {
 		return comments
 	}
 
-	// Jika gagal, coba decode sebagai string tunggal
 	var singleComment string
 	if err := json.Unmarshal(d.Comment, &singleComment); err == nil {
 		return []string{singleComment}
 	}
 
-	// Jika semua gagal, log error (opsional)
 	log.Printf("[ERROR] Failed to parse Comment: %s", string(d.Comment))
 	return comments
 }
 
-// **Fungsi untuk mendapatkan subnet ECS dengan penanganan IPv6**
 func getECSSubnet(ip net.IP, prefixLen int) string {
 	if ip.To4() != nil {
 		ip = ip.Mask(net.CIDRMask(prefixLen, 32))
@@ -93,7 +87,6 @@ func getECSSubnet(ip net.IP, prefixLen int) string {
 	return fmt.Sprintf("%s/%d", ip.String(), prefixLen)
 }
 
-// **Fungsi untuk mengecek apakah IP adalah private**
 func isPrivateIP(ip net.IP) bool {
 	privateBlocks := []string{
 		"10.0.0.0/8",
@@ -117,7 +110,6 @@ func isPrivateIP(ip net.IP) bool {
 	return false
 }
 
-// **Constructor untuk DOHClient dengan perhitungan total weight**
 func NewDOHClient(resolvers []Resolver) *DOHClient {
 	totalWeight := 0
 	for _, r := range resolvers {
@@ -145,13 +137,12 @@ func NewDOHClient(resolvers []Resolver) *DOHClient {
 	}
 }
 
-// **Fungsi memilih resolver berbasis weight (bobot)**
 func (d *DOHClient) getNextResolver() Resolver {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 
 	if d.totalWeight == 0 || len(d.Resolvers) == 0 {
-		return d.Resolvers[rand.Intn(len(d.Resolvers))] // Fallback ke random
+		return d.Resolvers[rand.Intn(len(d.Resolvers))] // Fallback to random
 	}
 
 	randVal := rand.Intn(d.totalWeight)
@@ -161,10 +152,9 @@ func (d *DOHClient) getNextResolver() Resolver {
 		}
 		randVal -= r.Weight
 	}
-	return d.Resolvers[0] // Fallback jika terjadi error
+	return d.Resolvers[0] // Fallback if error
 }
 
-// **Query dengan resolver yang dipilih secara berbasis weight**
 func (d *DOHClient) Query(domain string, qtype uint16, clientIP string) (*DOHResponse, ResolverInfo, error) {
 	if len(d.Resolvers) == 0 {
 		return nil, ResolverInfo{}, fmt.Errorf("no resolvers available")
@@ -173,7 +163,6 @@ func (d *DOHClient) Query(domain string, qtype uint16, clientIP string) (*DOHRes
 	domain = strings.TrimSuffix(domain, ".")
 	qtypeStr := fmt.Sprintf("%d", qtype)
 
-	// Coba sebanyak jumlah resolver (weighted round-robin fallback)
 	for i := 0; i < len(d.Resolvers); i++ {
 		resolver := d.getNextResolver()
 

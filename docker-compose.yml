@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "5353:53/udp"   # Jika aplikasi menggunakan DNS over UDP
+      - "5353:53/udp"   
     volumes:
       - ./config:/app/config    # Mount volume ke host
     restart: always

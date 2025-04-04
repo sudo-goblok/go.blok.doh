@@ -1,4 +1,4 @@
-# Gunakan base image Golang berbasis Alpine
+# menggunakan base image Golang berbasis Alpine
 FROM golang:1.24.2-alpine
 
 # Install tools tambahan
@@ -24,13 +24,13 @@ RUN go build -o app .
 RUN mkdir -p /app/config
 #COPY ./src/config/config.yaml /app/config/config.yaml
 COPY ./config.default.yaml . 
-# Buat entrypoint script untuk menjaga config.yaml tetap ada
+
+#  entrypoint script untuk maintenance config.yaml 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Expose port yang digunakan (ubah ke 5353 jika pakai UDP DNS)
+# Expose port yang digunakan
 EXPOSE 53
 
-# Gunakan entrypoint agar config.yaml tidak hilang saat volume di-mount
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./app"]

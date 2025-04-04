@@ -402,22 +402,7 @@ func (u *UDPServer) Start() {
 					log.Print("[INFO] response from cache sent")
 					logEntry.Resolver = "Cache"
 					logEntry.ResolverURL = "cache://" + cacheKey
-					// logEntry := logdb.DNSLog{
-					// 	ClientIP:    ipStr,
-					// 	Query:       domain,
-					// 	QueryType:   int(qtype),
-					// 	Resolver:    "Cache",
-					// 	ResolverURL: "cache://" + cacheKey,
-					// 	Response: []struct {
-					// 		Name string `json:"name"`
-					// 		Type int    `json:"type"`
-					// 		TTL  int    `json:"TTL"`
-					// 		Data string `json:"data"`
-					// 	}{
-					// 		{Name: "example.com", Type: 1, TTL: 60, Data: "93.184.216.34"},
-					// 	},
-					// 	Comment: []string{"Success"},
-					// }
+
 					logManager.SaveLog(logEntry)
 
 				} else {
