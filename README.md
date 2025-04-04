@@ -26,11 +26,9 @@ The name `GO.BLOK` is a play on words: **GOBLOK** = **BODoH** = **STUPID**
 - ... (I'll think about more later)  
 
 ## Installation & Configuration  
-### **Clone the Repository**  
-```sh
-git clone https://github.com/apris2/go.blok.doh.git
-cd go.blok.doh
-```
+### **Choose and Download the release**  
+release page [`https://github.com/sudo-goblok/go.blok.doh/releases`](https://github.com/sudo-goblok/go.blok.doh/releases)
+
 
 ### Docker or Podman  
 #### Build Image  
