@@ -43,7 +43,8 @@ docker compose up
 ```
 #### Configuration  
 The `config` directory in `docker-compose.yml` is mounted as a host volume.  
-The `config.yaml` file inside it **rarely needs editing**. If necessary, just comment/uncomment the existing resolver entries. That’s it!  
+
+Unless you are running without a container, the `config.yaml` file inside it does not need to be edited. If necessary, simply comment/uncomment the existing resolver entries. That’s it! 
 
 The `config.yaml` file allows you to configure the DoH resolver, server port, and other parameters.  
 
